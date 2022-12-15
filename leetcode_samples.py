@@ -146,3 +146,51 @@ def firstMissingPositive(nums) -> int:
         return int(1)
 
 firstMissingPositive([1,2,0])
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+        
+class Solution:
+    def mergeTwoLists(self, list1, list2):
+        self.list1 = list1
+        self.list2 = list2
+
+        dummy = ListNode()
+        tail = dummy 
+
+        while list1 and list2:  
+            # esto oti lista 1 kai lista 2 den einai 0 
+            if list1.val < list2.val:
+                #  thelo na valo proto noumero sthn oura, sth lista, to mikrotero noumero
+                tail.next = list1
+                list1 = list1.next 
+            else:
+                tail.next = list2
+                list2 = list2.next
+            
+        if list1: 
+            # ean mono h lista 1 den einai kenh []
+            tail.next = list1
+            list1 = list1.next
+        
+        elif list2: 
+            # ean mono h lista 2 den einai kenh []
+            tail.next = list2 
+            list2 = list2.next 
+        
+        return dummy.next
+
+
+lst1 = ListNode(1)
+lst1.next = ListNode(2)
+lst1.next.next = ListNode(3)    
+
+lst2 = ListNode(1)
+lst2.next = ListNode(3)
+lst2.next.next = ListNode(4) 
+
+sol = Solution()
+print(sol.mergeTwoLists(lst1, lst2))
+
