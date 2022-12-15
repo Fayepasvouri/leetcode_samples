@@ -105,3 +105,44 @@ def groupAnagrams(strs):
     return list(new_dict.values())
                 
 groupAnagrams(["eat","tea","tan","ate","nat","bat"])
+
+def firstMissingPositive(nums) -> int:
+
+    count = [i for i in range(50)]
+    if len(nums) > len(count):
+        return len(nums)
+    elif len(nums) == len(count):
+        return int(len(nums/2))
+    else:
+        new_count = int(len(count)/len(nums))
+        if [s % 2 for s in count[new_count:]]:
+            new_count = int(len(count[new_count:])/2)
+    
+    left_count = count[:new_count]
+    right_count = count[new_count:]
+
+    i = set.intersection(set(nums),set(left_count))
+    y = set.intersection(set(nums),set(right_count))
+
+        
+    if len(i) > 0:
+        n = len(left_count)
+        b = nums
+        hash = set(b)
+        for i in range(1, n + 2):
+            if i not in hash:
+                return i
+              
+    
+    elif len(y) > 0:
+        n = len(right_count)
+        b = nums
+        hash = set(b)
+        for i in range(1, n + 2):
+            if i not in hash:
+                return i
+   
+    else:
+        return int(1)
+
+firstMissingPositive([1,2,0])
