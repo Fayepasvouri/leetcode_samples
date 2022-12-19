@@ -194,3 +194,79 @@ lst2.next.next = ListNode(4)
 sol = Solution()
 print(sol.mergeTwoLists(lst1, lst2))
 
+#uclidian Algorithm for GCD 
+
+def euclidian_gcd():
+    a = 106
+    b =  6
+    r=a%b
+    while r:
+        a=b
+        b=r
+        r=a%b
+        return b
+
+euclidian_gcd()
+
+# Test Primality 
+
+from math import sqrt
+
+def prime(a, N):
+    if a < N: 
+        return False
+    for x in range(N, int(sqrt(a)) + 1):
+        print(x)
+        if a % x == 0:
+            return False
+    return True
+
+prime(3, 2)
+
+
+def display_hash(hashTable):
+	
+	for i in range(len(hashTable)):
+		print(i, end = " ")
+		
+		for j in hashTable[i]:
+			print("-->", end = " ")
+			print(j, end = " ")
+			
+		print()
+
+HashTable = [[] for _ in range(10)]
+
+def Hashing(keyvalue):
+	return keyvalue % len(HashTable)
+
+def insert(Hashtable, keyvalue, value):
+	
+	hash_key = Hashing(keyvalue)
+	Hashtable[hash_key].append(value)
+
+insert(HashTable, 10, 'Allahabad')
+insert(HashTable, 25, 'Mumbai')
+insert(HashTable, 20, 'Mathura')
+insert(HashTable, 9, 'Delhi')
+insert(HashTable, 21, 'Punjab')
+insert(HashTable, 21, 'Noida')
+
+display_hash (HashTable)
+
+def make_hash_table():
+	dicts = {}
+	keyvalue = 10
+
+	hashtable = [10,13,20,9,2,21,6,7,43,11]
+
+	for index, y in enumerate(hashtable):
+		results = keyvalue % y
+		if y in dicts:
+			dicts[results].append(y[index])
+		else:
+			dicts[results] = [y]
+
+	return dicts 
+make_hash_table()
+
