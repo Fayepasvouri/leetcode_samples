@@ -270,3 +270,29 @@ def make_hash_table():
 	return dicts 
 make_hash_table()
 
+#QuickSort O(nlogn) worst can be O(n2) --> time complexity and O(logn) --> space complexity
+
+def partition(array):
+
+    less = []
+    equal = []
+    greater = []
+
+    if len(array) < 1:
+        return []
+
+    elif len(array) > 1:
+        pivot = array[0]
+        for x in array:
+            if x < pivot:
+                less.append(x)
+            elif x == pivot:
+                equal.append(x)
+            elif x > pivot:
+                greater.append(x)
+      
+        return partition(less) + equal + partition(greater)  
+    else:
+        return array
+
+partition([8, 7, 2, 1, 0, 9, 6])
