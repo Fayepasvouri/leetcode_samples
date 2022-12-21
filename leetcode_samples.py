@@ -327,3 +327,35 @@ if __name__ == "__main__":
         print("Both trees are identical")
     else:
         print("Trees are not identical")
+	
+def maxProfit(prices) -> int:
+    
+    smallest_num = min(prices)
+    biggest_num = max(prices)
+    day_1 = prices[0]
+
+    if len(prices) < 2:
+        return 0
+    
+    elif smallest_num == prices[-1] and biggest_num == prices[0]:
+        return 0 
+    
+    elif smallest_num == prices[0]:
+        return biggest_num - smallest_num
+
+    elif smallest_num == prices[-1] and biggest_num != prices[0]:
+        del prices[-1]
+        return max(prices) - min(prices)
+    
+    else:
+        for index, i in enumerate(prices):
+            if smallest_num == i:
+                return index 
+            elif biggest_num == i and biggest_num == prices[0]:
+                del prices[0]
+            else: 
+                return max(prices) - min(prices)
+
+        return max(prices) - min(prices)
+        
+maxProfit([2,4,1])
