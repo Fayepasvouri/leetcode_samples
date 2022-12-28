@@ -359,3 +359,44 @@ def maxProfit(prices) -> int:
         return max(prices) - min(prices)
         
 maxProfit([2,4,1])
+
+def maxProfit(prices) -> int:
+    left_ptr, profit = 0, 0
+
+    for right_ptr in range(1, len(prices)):
+      if prices[left_ptr] < prices[right_ptr]:
+        profit = max(profit, prices[right_ptr] - prices[left_ptr])
+      else:
+        left_ptr = right_ptr
+
+    return profit
+
+maxProfit([4,3,1])
+
+import re 
+def mostCommonWord(paragraph, banned):
+
+  paragraph = paragraph.lower()
+  paragraph = re.sub(r'[^\w\s]',' ', paragraph)
+  paragraph = paragraph.split()
+
+  result = {}    
+  for word in paragraph:                                                                                                                                                                                               
+      result[word] = result.get(word, 0) + 1  
+  
+  for i in banned:
+    if i in result:
+      result.pop(i)
+  
+  if banned is not []:
+  
+    max_values = max(result.values())
+    
+    for key, value in result.items():
+      if value == max_values:
+        return key
+  
+  else:
+    return ""
+  
+mostCommonWord('Bob hit a ball, the hit BALL flew far after it was hit.', ['hit'])
