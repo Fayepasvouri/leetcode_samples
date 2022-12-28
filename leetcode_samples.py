@@ -400,3 +400,31 @@ def mostCommonWord(paragraph, banned):
     return ""
   
 mostCommonWord('Bob hit a ball, the hit BALL flew far after it was hit.', ['hit'])
+
+# DFS and Dynamic Programming with Probability Theory
+
+class Solution:
+    def knightProbability(self, n: int, k: int, row: int, column: int) -> float:
+        from collections import deque
+
+        matrix = [[0] * n for _ in range(n)]
+        matrix[row][column] = 1
+
+        if k == 1 and n == 1:
+            return 0.0
+        
+        while k is not 0 or n is not 0:
+            for _ in range(k):
+                dp2 = [[0] * n for _ in range(n)]
+                for r, row in enumerate(matrix):
+                    for c, val in enumerate(row):
+                        for dr, dc in ((2,1),(2,-1),(-2,1),(-2,-1),(1,2),(1,-2),(-1,2),(-1,-2)):
+                            if 0 <= r + dr < n and 0 <= c + dc < n:
+                                dp2[r+dr][c+dc] += val / 8.0
+                                matrix = dp2
+
+            return sum(map(sum, matrix))
+        return 0.0
+
+sol = Solution()
+sol.knightProbability(7, 2, 0, 0)
