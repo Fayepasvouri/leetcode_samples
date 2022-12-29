@@ -481,3 +481,26 @@ def intToRoman(num):
   return roman_number
      
 intToRoman(12)
+
+from collections import Counter
+
+def findCenter(edges) -> int:
+
+  length_list = len(edges)
+  
+  flatten_list = [item for sublist in edges for item in sublist]
+  
+  if length_list is None:
+    return []
+  
+  while length_list > 0:
+    new_dict = {}
+    for i in flatten_list:
+      counting = flatten_list.count(i)
+      new_dict[i] = counting
+    
+    for key, value in new_dict.items():
+      if value == length_list:
+        return key
+        
+findCenter([[1,2],[2,3],[4,2]])
