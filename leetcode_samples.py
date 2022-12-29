@@ -428,3 +428,29 @@ class Solution:
 
 sol = Solution()
 sol.knightProbability(7, 2, 0, 0)
+
+import numpy as np 
+def moveZeroes(nums) -> None:
+  
+  nums = sorted(nums)
+  length_list = len(nums)
+  
+  final_dict = []
+  
+  if length_list == 0:
+    return []
+
+  elif length_list > 0:
+    for i in range(length_list):
+       if nums[i] == 0: 
+        final_dict.append(nums[i])
+
+  for i in range(len(final_dict)):
+    if final_dict[i] <= nums[i]:
+      nums.append(final_dict[i])
+    else:
+      nums[i] = final_dict[i]
+
+  return np.trim_zeros(nums, 'f')
+
+moveZeroes([0,1,0,3,12])
