@@ -454,3 +454,30 @@ def moveZeroes(nums) -> None:
   return np.trim_zeros(nums, 'f')
 
 moveZeroes([0,1,0,3,12])
+
+def intToRoman(num):
+
+  val = [
+            1000, 900, 500, 400,
+            100, 90, 50, 40,
+            10, 9, 5, 4,
+            1
+            ]
+  syb = [
+            "M", "CM", "D", "CD",
+            "C", "XC", "L", "XL",
+            "X", "IX", "V", "IV",
+            "I"
+            ]
+
+  roman_number = ''
+  i = 0
+   
+  while num > 0:
+    for y in range(num // val[i]):
+      roman_number += syb[i]
+      num -= val[i]
+    i += 1
+  return roman_number
+     
+intToRoman(12)
