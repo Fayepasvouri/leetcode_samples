@@ -504,3 +504,61 @@ def findCenter(edges) -> int:
         return key
         
 findCenter([[1,2],[2,3],[4,2]])
+
+def wordBreak(s: str, wordDict) -> bool:
+    
+    word_occurance = [True]
+    for i in range(1, len(s)+1):
+        result = False
+        for j in range(i):
+            if s[j:i] in wordDict and word_occurance[j]:
+                result = True
+        word_occurance.append(result)
+    return word_occurance[-1]
+
+wordBreak('catsandog', ["cats","dog","sand","and","cat"])
+
+from collections import Counter
+def longestPalindrome(s: str) -> int:
+
+    if len(s) == 1:
+        return 1
+    
+    elif len(s) == 0:
+        return 0
+
+    counter = Counter(s)
+    final_result = []
+    for key, value in counter.items():
+        if value % 2 == 0:
+            final_result.append(key * value)
+        elif value % 2 != 0:
+            final_result.append(key)
+
+    for i in final_result:
+        for y in final_result:
+            for x in final_result:
+                if len(i) > len(y) > 1 and len(x) == 1:
+                    return int(len(y)/2 + len(i)/2 + len(x) + len(i)/2 + len(y)/2)
+          
+
+longestPalindrome("abccccdd")
+
+def longestPalindrome(s: str) -> int:
+
+    combinations = {}
+
+    longest = 0
+    for i in s:
+        if i in combinations:
+            combinations.pop(i)
+            longest += 2
+        else:
+            combinations[i] = 1
+ 
+    if combinations:
+        longest+=1
+    return longest
+        
+
+longestPalindrome("abccccdd")
