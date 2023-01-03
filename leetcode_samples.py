@@ -598,3 +598,16 @@ def firstUniqChar(s: str) -> int:
     return -1
 
 firstUniqChar('llaa')
+
+def kWeakestRows(mat, k: int):
+    
+    my_list = []
+    my_dict = {}
+    for key, value in enumerate(mat):
+        sums = sum(value)
+        my_dict[key] = sums
+    my_dict = dict(sorted(my_dict.items(), key=lambda item: item[1]))
+    final_list = list(my_dict.keys())
+    return final_list[:k]
+ 
+kWeakestRows([[1,1,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,1,0,0,0],[1,1,1,1,1]], 3)
