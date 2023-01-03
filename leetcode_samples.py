@@ -562,3 +562,39 @@ def longestPalindrome(s: str) -> int:
         
 
 longestPalindrome("abccccdd")
+
+import itertools 
+
+def arrayPairSum(nums) -> int:
+
+    sorted_list = sorted(nums)
+
+    return sum(sorted_list[::2])    
+
+arrayPairSum([6,2,6,5,1,2])
+
+from collections import Counter
+def firstUniqChar(s: str) -> int:
+    
+    if s == "":
+        return 0 
+    
+    counter = Counter(s)
+    string_to_list = list(s)
+    
+    my_list = []
+    equal_list = []
+    for key, val in counter.items():
+        if val % 2 == 0:
+            equal_list.append(key)
+    
+        elif val == 1:
+            my_list.append(key)
+    
+        for index, val in enumerate(string_to_list):
+            for idx, value in enumerate(my_list):
+                    if value[0] in val:
+                        return index
+    return -1
+
+firstUniqChar('llaa')
