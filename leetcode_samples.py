@@ -611,3 +611,94 @@ def kWeakestRows(mat, k: int):
     return final_list[:k]
  
 kWeakestRows([[1,1,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,1,0,0,0],[1,1,1,1,1]], 3)
+
+from collections import Counter
+def isValidSudoku(board) -> bool:
+    
+    
+    length = len(board)
+    count = 0
+    num = 0
+    numbers = 0
+    index = []
+    status = True
+    final_list = []
+    
+    lista_rows = []
+    for indices in range(length):
+        newlista  = [i for i in board[indices] if '.' not in i]
+        lista_rows.append(newlista)
+    
+    def remove_empty_lists(lista):
+        return (
+            [remove_empty_lists(i) for i in lista if i!=[]]
+            if isinstance(lista, list)
+            else lista
+        )
+
+    final_lista_rows = remove_empty_lists(lista_rows)
+    
+    sorted_sets = []
+    for sets in final_lista_rows:
+        res = sorted(sets)
+        sorted_sets.append(res)
+   
+    d = Counter([tuple(x) for x in sorted_sets])
+    identicals = [list(k) for k, v in d.items() if v >= 2]
+    flatten_identicals = [item for i in identicals for item in i ]
+ 
+    flatten_identicals = [item for item, count in Counter(flatten_identicals).items() if count > 1]
+    
+    lists_2_rows = []
+    for values in final_lista_rows:
+        listtwo = dict((i, values.count(i)) for i in values)
+        lists_2_rows.append(listtwo)
+    
+
+    false_true = []
+    for vals in lists_2_rows:
+        for keys, val in vals.items():
+            if val > 1 or  len(flatten_identicals) > 1:
+                false_true.append(False)
+            elif flatten_identicals == [] or len(flatten_identicals) == 1:
+                false_true.append(True)
+
+    for i in board:
+        count += length
+        num += 1
+        new = num - 1
+        index.append(new)
+    
+    for y in index:
+        for x in board:
+            final_list.append(x[y])
+    
+    new_list = [final_list[i:i + length] for i in range(0, len(final_list), length)]
+  
+    list_to_dict = []
+    for x in new_list:
+        newlist  = [i for i in x if '.' not in i]
+        list_to_dict.append(newlist)
+
+    def remove_empty(lst):
+        return (
+            [remove_empty(i) for i in lst if i!=[]]
+            if isinstance(lst, list)
+            else lst
+        )
+
+    final_lista = remove_empty(list_to_dict)
+    
+    list_2 = []
+    for values in final_lista:
+        list2 = dict((i, values.count(i)) for i in values)
+        list_2.append(list2)
+    
+    for vals in list_2:
+        for keys, val in vals.items():
+            for instances in false_true:
+                if val > 1 or instances is False:
+                    return False
+    return True
+
+isValidSudoku([[".",".",".",".","5",".",".","1","."],[".","4",".","3",".",".",".",".","."],[".",".",".",".",".","3",".",".","1"],["8",".",".",".",".",".",".","2","."],[".",".","2",".","7",".",".",".","."],[".","1","5",".",".",".",".",".","."],[".",".",".",".",".","2",".",".","."],[".","2",".","9",".",".",".",".","."],[".",".","4",".",".",".",".",".","."]])
