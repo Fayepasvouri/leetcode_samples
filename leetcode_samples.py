@@ -702,3 +702,90 @@ def isValidSudoku(board) -> bool:
     return True
 
 isValidSudoku([[".",".",".",".","5",".",".","1","."],[".","4",".","3",".",".",".",".","."],[".",".",".",".",".","3",".",".","1"],["8",".",".",".",".",".",".","2","."],[".",".","2",".","7",".",".",".","."],[".","1","5",".",".",".",".",".","."],[".",".",".",".",".","2",".",".","."],[".","2",".","9",".",".",".",".","."],[".",".","4",".",".",".",".",".","."]])
+
+
+select
+MAX(score_points) as highest_points
+from 
+    (select distinct ha.name as name, 
+    ha.hacker_id as ha_id, 
+    sub.score,
+        SUM(CASE WHEN cha.difficulty_level = 1 and sub.score >=  20 THEN 1 
+                 WHEN cha.difficulty_level = 2 and sub.score >=  30 THEN 1 
+                 WHEN cha.difficulty_level = 3 and sub.score >=  40 THEN 1 
+                 WHEN cha.difficulty_level = 4 and sub.score >=  60 THEN 1 
+                 WHEN cha.difficulty_level = 5 and sub.score >=  80 THEN 1 
+                 WHEN cha.difficulty_level = 6 and sub.score >=  100 THEN 1 
+                 WHEN cha.difficulty_level = 7 and sub.score >=  120 THEN 1 ELSE 0 END) as score_points
+    from Hackers as ha
+    inner join Challenges as cha 
+    on cha.hacker_id = ha.hacker_id
+    inner join Submissions as sub
+    on ha.hacker_id = sub.hacker_id
+    group by ha.name, ha.hacker_id, sub.score) 
+max_grade
+;
+
+with final_table as (select genre.genre, 
+       max(Domestic + Worldwide - Budget) as net_profit
+from imdb
+left join genre
+    on genre.Movie_id = imdb.Movie_id
+left join earning 
+    on imdb.Movie_id = earning.Movie_id
+where imdb.Title like '%(2012)%' and genre.genre is not null
+group by genre.genre)
+select genre, max(net_profit) as net_profit
+from final_table
+where net_profit is not null
+group by genre
+order by genre;
+
+select
+COUNT(*) as ConsecutiveNums from (select Id as Id, 
+    row_number() over (partition by Id) - row_number() over (partition by Num order by ID) as 
+            ConsecutiveNums
+from Logs) Logs
+where Id = (select max(Id) from Logs);
+
+select Department, Employee, Salary from (
+               select 
+               dep.name as Department, emp.name as Employee, emp.Salary,
+               rank() over (partition by dep.name order by Salary desc) rn
+from Employee as emp
+left join Department as dep 
+on emp.DepartmentId = dep.Id) T
+where rn = 1
+order by Employee desc;
+
+with final_table as (select * from (select
+case when ac.income <= 20000 then 'Low Salary'
+     when ac.income between 20000 and 50000 then 'Average Salary'
+     when ac.income >= 50000 then 'High Salary'
+     else '' end as category,
+     count( ac.account_id) as accounts_count
+from Accounts as ac
+group by ac.income) t)
+select category, count(*) as accounts_count
+from final_table
+group by category
+order by accounts_count
+;
+
+SELECT
+'Low Salary' AS category,
+COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income<20000
+union all 
+select 
+'Average Salary' as category,
+count(*) as accounts_count
+from Accounts
+where income between 20000 and 50000
+union all 
+select
+'Highest Salary' as category,
+count(*) as accounts_count
+from Accounts
+where income>50000;
