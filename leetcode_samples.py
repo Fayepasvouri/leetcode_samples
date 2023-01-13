@@ -795,3 +795,38 @@ from Employee
 where Salary < (select max(Salary) from Employee) 
 group by Employee.Id, Employee.Salary
 limit 1;
+
+
+select from_id as person1, to_id as person2, 
+count(duration) as call_count,
+sum(duration) as total_duration
+from (select * 
+      from Calls 
+      
+      union all
+      
+      select to_id, from_id, duration 
+      from Calls) t1
+where from_id < to_id
+group by from_id, to_id
+order by from_id, to_id
+
+select dense_rank() over(order by customer_number) as customer_number
+from Orders
+limit 1 offset 2
+
+select t.viewer_id as Id from (select viewer_id,
+count(distinct article_id) as articles
+from Views
+group by viewer_id
+) t
+group by t.viewer_id
+order by t.viewer_id
+limit 2 offset 2
+
+select product_id from (select product_id,
+CASE
+  WHEN pr.low_fats = 'Y' and pr.recyclable = 'Y' THEN 1
+  ELSE 0 END as freq
+from Products as pr) t 
+where freq = 1
