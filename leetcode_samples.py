@@ -830,3 +830,32 @@ CASE
   ELSE 0 END as freq
 from Products as pr) t 
 where freq = 1
+
+select employee_id, 
+count(*) OVER(PARTITION BY team_id) team_size 
+from employee
+order by employee_id
+
+select query_name,
+cast(sum(rating/position) as float) /cast(count(query_name) as float) as quality
+from Queries
+group by query_name
+order by quality
+
+select name,
+case when bonus is null then 'null' else cast(bonus as varchar) end as bonus
+from Employee as emp
+left join Bonus as bn
+on emp.empId = bn.empId
+where bonus < 1000 or bonus is null 
+
+select 
+case when perc is not null then count(customer_id)/diff.perc * 100 else null end / 6 * 1.00
+as immediate_percentage
+from (select customer_id,
+case when order_date = customer_pref_delivery_date then count(customer_id) else null end as perc
+from Delivery
+group by customer_id, order_date, customer_pref_delivery_date) diff
+group by perc
+limit 1 offset 1
+
