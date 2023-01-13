@@ -789,3 +789,9 @@ select
 count(*) as accounts_count
 from Accounts
 where income>50000;
+
+select Salary as SecondHighestSalary
+from Employee
+where Salary < (select max(Salary) from Employee) 
+group by Employee.Id, Employee.Salary
+limit 1;
