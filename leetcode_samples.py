@@ -931,3 +931,59 @@ tree.right.right = TreeNode(7)
 sol = Solution()
 sol.sumOfLeftLeaves(tree)
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def mergeTrees(self, root1, root2):
+        self.root1 = root1
+        self.root2 = root2
+    
+        if root1 is None and root2 is None:
+            return 0
+        
+        
+        res = 0 
+        res2 = 0
+        res3 = 0
+
+        if root1.left:
+            if not root1.left.right:
+                res += root1.left.val
+                res2 += root1.left.left.val
+                res3 += root1.right.val
+            else:
+                self.mergeTrees(root1.val)
+
+        sec_res = 0 
+        sec_res2 = 0
+        sec_res3 = 0
+        sec_res4 = 0
+
+        if root2.left:
+            if not root2.left.left:
+                sec_res += root2.left.val
+                sec_res2 += root2.left.right.val
+                sec_res3 += root2.right.val
+                sec_res4 += root2.right.right.val
+                
+        val = [root1.val + root2.val, res + sec_res, res3 + sec_res3, res2, sec_res2, 'null', sec_res4]
+        return val
+
+tree = TreeNode(1)
+tree.left = TreeNode(3)
+tree.left.left = TreeNode(5)
+tree.right = TreeNode(2)
+
+sec_tree = TreeNode(2)
+sec_tree.left = TreeNode(1)
+sec_tree.left.right = TreeNode(4)
+sec_tree.right = TreeNode(3)
+sec_tree.right.right = TreeNode(7)
+
+sol = Solution()
+sol.mergeTrees(tree, sec_tree)
+
