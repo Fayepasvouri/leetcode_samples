@@ -859,3 +859,42 @@ group by customer_id, order_date, customer_pref_delivery_date) diff
 group by perc
 limit 1 offset 1
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def hasPathSum(self, root, targetSum: int) -> bool:
+        
+        self.root = root
+
+        if root is None:
+            return False
+        
+        if root.left == None and root.right == None and targetSum - root.val == 0:
+            return True
+     
+        return self.hasPathSum(root.left, targetSum - root.val) or self.hasPathSum(root.right, targetSum - root.val)
+
+
+tree = TreeNode(5)
+tree.left = TreeNode(4)
+tree.left.left = TreeNode(11)
+tree.left.left.left = TreeNode(7)
+tree.left.left.right = TreeNode(2)
+tree.right = TreeNode(8)
+tree.right.left = TreeNode(13)
+tree.right.right = TreeNode(4)
+tree.right.right.right = TreeNode(1)
+
+if __name__ == "__main__":
+    sol = Solution()
+    if sol.hasPathSum(tree, 22):
+        print(True)
+    else:
+        print(False)
+
+
+
