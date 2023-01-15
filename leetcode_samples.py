@@ -942,36 +942,17 @@ class Solution:
         self.root1 = root1
         self.root2 = root2
     
-        if root1 is None and root2 is None:
-            return 0
+        if root1 is None:
+            return root2
+        elif root2 is None:
+            return root1
+  
+        if root1 and root2:
+            root1.val += root2.val
+            root1.left = self.mergeTrees(root1.left, root2.left)
+            root1.right = self.mergeTrees(root1.right, root2.right)
         
-        
-        res = 0 
-        res2 = 0
-        res3 = 0
-
-        if root1.left:
-            if not root1.left.right:
-                res += root1.left.val
-                res2 += root1.left.left.val
-                res3 += root1.right.val
-            else:
-                self.mergeTrees(root1.val)
-
-        sec_res = 0 
-        sec_res2 = 0
-        sec_res3 = 0
-        sec_res4 = 0
-
-        if root2.left:
-            if not root2.left.left:
-                sec_res += root2.left.val
-                sec_res2 += root2.left.right.val
-                sec_res3 += root2.right.val
-                sec_res4 += root2.right.right.val
-                
-        val = [root1.val + root2.val, res + sec_res, res3 + sec_res3, res2, sec_res2, 'null', sec_res4]
-        return val
+        return root1
 
 tree = TreeNode(1)
 tree.left = TreeNode(3)
@@ -986,4 +967,6 @@ sec_tree.right.right = TreeNode(7)
 
 sol = Solution()
 sol.mergeTrees(tree, sec_tree)
+
+
 
