@@ -968,5 +968,23 @@ sec_tree.right.right = TreeNode(7)
 sol = Solution()
 sol.mergeTrees(tree, sec_tree)
 
+class IntegerDivision:
 
+    def __init__(self, lists):
+        self.lists = lists
 
+    def divide_integers(self): 
+
+        k = int(len(self.lists)/2)
+        set_one = self.lists[:k]
+        set_two = self.lists[k:]
+        results = []
+        if set_one[0] > 0 and set_two[0] > 0: 
+            result_one = int(set_one[0]) / int(set_one[1])
+            result_two = int(set_two[0]) / int(set_two[1])
+            results.append([result_one, result_two])
+        print(results)
+        return results
+        
+result = IntegerDivision([10, 3, 7, -3])
+result.divide_integers()
